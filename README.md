@@ -1,2 +1,2 @@
 # web2ebook
-convert content from a website into an ebook (ebup, mobi)
+Convert content from a website into an ebook (epub, mobi)
