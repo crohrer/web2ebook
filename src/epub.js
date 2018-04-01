@@ -14,7 +14,7 @@ function generateEpub({
 		author,
 		publisher,
 		cover,
-		output: output || `output/${title}-${author}-${new Date().toISOString()}`,
+		output: output || `output/${title.trim()}-${author}`.replace(/\s+/g,'-').replace('\n',''),
 		lang,
 		content,
 	}

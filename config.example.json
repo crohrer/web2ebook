@@ -2,12 +2,33 @@
     "firstChapterUrl": "http://www.zeit.de/zeit-magazin/leben/2018-03/tod-offene-fragen-nachdenken-lebensende-alter",
     "language": "de",
     "selectors": {
-        "title": "h1.headline",
-        "authorName": ".header-article span[itemprop=author] span[itemprop=name]",
-        "coverImg": ".header-article__media-container img",
-        "publisher": ".header__publisher svg>title",
-        "nextLink": ".article-pagination__item:last-child>a",
-        "content": ".article-page",
-        "contentIgnore": ".ad-container"
+        "title": {
+	    "selector": "h1.headline",
+	    "type": "text"
+	},
+        "author": {
+	    "selector": ".header-article span[itemprop=author] span[itemprop=name]",
+	    "type": "text",
+	    "isArray": true
+	},
+        "cover": {
+	    "selector": ".header-article__media-container img",
+            "type": "attr",
+            "attr": "src"
+	},
+        "publisher": {
+            "selector": ".header__publisher svg>title",
+            "type": "text"
+	},
+        "nextLink": {
+            "selector": ".article-pagination__item:last-child>a",
+            "type": "attr",
+	    "attr": "href"
+        },
+        "content": {
+            "selector": ".article-page",
+            "type": "html",
+            "ignoreSelector": ".ad-container"
+        }
     }
 }
