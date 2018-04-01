@@ -5,21 +5,21 @@ function generateEpub({
 	author = 'Unknown author',
 	publisher = undefined,
 	cover = undefined,
-	output = undefined,
 	lang = 'en',
 	content = [],
 } = {}){
+	const output = `output/${title.trim()}-${author}.epub`.replace(/\s+/g,'-').replace('\n','')
 	const options = {
 		title,
 		author,
 		publisher,
 		cover,
-		output: output || `output/${title.trim()}-${author}`.replace(/\s+/g,'-').replace('\n',''),
 		lang,
 		content,
+		output,
 	}
-
-	new Epub(options)
+	
+	return new Epub(options).promise.then(() => output);
 }
 
 module.exports = generateEpub
