@@ -14,6 +14,7 @@ function filterHtml({
 			let $item = $(item.selector);
 			switch(item.type){
 				case "html":
+					$item.find(item.ignoreSelector).remove()
 					results[key] = $item.html();
 					break;
 				case "attr":
