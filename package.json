@@ -1,0 +1,27 @@
+{
+  "name": "web2ebook",
+  "version": "1.0.0",
+  "description": "Convert content from a website into an ebook (epub, mobi)",
+  "main": "index.js",
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "epub-gen": "^0.0.20",
+    "node-horseman": "^3.3.0",
+    "phantomjs-prebuilt": "^2.1.16"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/crohrer/web2ebook.git"
+  },
+  "author": "Christoph Rohrer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/crohrer/web2ebook/issues"
+  },
+  "homepage": "https://github.com/crohrer/web2ebook#readme"
+}
