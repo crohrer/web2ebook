@@ -3,6 +3,7 @@ const generateMobi = require('./mobi')
 const buildEbook = require('./buildEbook')
 const getHtml = require('./crawler')
 const filterHtml = require('./parser')
+const getAbsoluteUrl = require('./getAbsoluteUrl')
 const fs = require('fs')
 
 function start(){
@@ -11,7 +12,10 @@ function start(){
 
     getHtml({url})
         .then(html => filterHtml({html, selectors: {bookLink}}))
-        .then(results => buildNextEbook({urls: results.bookLink, config}))
+        .then(results => buildNextEbook({
+            urls: results.bookLink.map(link => getAbsoluteUrl({urlWithDomain: url, relativeUrl: link})),
+            config
+        }))
 }
 
 function buildNextEbook({urls, config}){

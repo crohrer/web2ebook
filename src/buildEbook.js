@@ -1,9 +1,9 @@
 const getHtml = require('./crawler')
 const filterHtml = require('./parser')
+const getAbsoluteUrl = require('./getAbsoluteUrl')
 
 function buildEbook({url, config, ebook = {content: []}}){
     const {lang, selectors} = config
-    const domain = url.match(/(https?:\/\/[a-z\.A-Z0-9]+)\//)[1]
     return getHtml({url})
         .then(html => filterHtml({html, selectors}))
         .then(results =>{
@@ -14,8 +14,7 @@ function buildEbook({url, config, ebook = {content: []}}){
             if (author && author.length) ebook.author = author;
             if (publisher) ebook.publisher = publisher;
             if (cover) {
-                if (!cover.match(/https?:/)) cover = domain + cover
-                ebook.cover = cover;
+                ebook.cover = getAbsoluteUrl({urlWithDomain: url, relativeUrl: cover});
             }
             if (content) ebook.content.push({title: chapter, data: content})
 
@@ -23,8 +22,12 @@ function buildEbook({url, config, ebook = {content: []}}){
         })
         .then(result =>{
             let {ebook, nextLink} = result
-            if (nextLink && !nextLink.match(/https?:/)) nextLink = domain + nextLink
-            if (nextLink) return buildEbook({url: nextLink, config, ebook})
+            if (nextLink) {
+                return buildEbook({
+                    url: getAbsoluteUrl({urlWithDomain: url, relativeUrl: nextLink}),
+                    config, ebook
+                });
+            }
             return ebook
         })
 }
