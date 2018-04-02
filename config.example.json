@@ -3,27 +3,27 @@
     "language": "de",
     "selectors": {
         "title": {
-	    "selector": "h1.headline",
-	    "type": "text"
-	},
+            "selector": "h1.headline",
+            "type": "text"
+        },
         "author": {
-	    "selector": ".header-article span[itemprop=author] span[itemprop=name]",
-	    "type": "text",
-	    "isArray": true
-	},
+            "selector": ".header-article span[itemprop=author] span[itemprop=name]",
+            "type": "text",
+            "isArray": true
+        },
         "cover": {
-	    "selector": ".header-article__media-container img",
+            "selector": ".header-article__media-container img",
             "type": "attr",
             "attr": "src"
-	},
+        },
         "publisher": {
             "selector": ".header__publisher svg>title",
             "type": "text"
-	},
+        },
         "nextLink": {
             "selector": ".article-pagination__item:last-child>a",
             "type": "attr",
-	    "attr": "href"
+            "attr": "href"
         },
         "content": {
             "selector": ".article-page",

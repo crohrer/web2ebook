@@ -4,13 +4,17 @@ const buildEbook = require('./buildEbook')
 const fs = require('fs')
 
 function start(){
-	const config = JSON.parse(fs.readFileSync('config.json', 'utf8'));
-	const {firstChapterUrl, selectors, lang} = config;
+    const config = JSON.parse(fs.readFileSync('config.json', 'utf8'));
+    const {firstChapterUrl} = config;
 
-	buildEbook({url: firstChapterUrl, config})
-		.then(ebook => generateEpub(ebook))
-		.then(epub => generateMobi({input: epub, output: epub.replace(/\.epub$/,'.mobi')}))
-		.catch(e => console.error(e));
+    buildSingleEbook({url: firstChapterUrl, config})
+}
+
+function buildSingleEbook({url, config}){
+    return buildEbook({url, config})
+        .then(ebook => generateEpub(ebook))
+        .then(epub => generateMobi({input: epub, output: epub.replace(/\.epub$/, '.mobi')}))
+        .catch(e => console.error(e));
 }
 
 module.exports = start
