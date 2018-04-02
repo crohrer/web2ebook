@@ -1,5 +1,13 @@
 {
-    "firstChapterUrl": "http://www.zeit.de/zeit-magazin/leben/2018-03/tod-offene-fragen-nachdenken-lebensende-alter",
+    "bookList": {
+        "url": "http://www.zeit.de/zeit-magazin/essen-trinken/index",
+        "bookLink": {
+            "selector": "#main article>div>a",
+            "type": "attr",
+            "attr": "href",
+            "isArray": true
+        }
+    },
     "language": "de",
     "selectors": {
         "title": {

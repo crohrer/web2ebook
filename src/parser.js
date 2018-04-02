@@ -18,7 +18,12 @@ function filterHtml({
                     results[key] = $item.html();
                     break;
                 case "attr":
-                    results[key] = $item.attr(item.attr);
+                    if (item.isArray) {
+                        results[key] = [];
+                        $item.map((i, el) => results[key].push($(el).attr(item.attr)));
+                    } else {
+                        results[key] = $item.attr(item.attr);
+                    }
                     break;
                 case "text":
                 default:
