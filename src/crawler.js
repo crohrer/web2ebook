@@ -1,7 +1,7 @@
 const Promise = require('bluebird')
 const Horseman = require('node-horseman')
 
-function getHtml({url}){
+function getHtml({url, secondTry = false}){
     const horseman = new Horseman({ignoreSSLErrors: true})
 
     return new Promise((resolve, reject) =>{
@@ -13,10 +13,14 @@ function getHtml({url}){
             .html()
             .then(resolve)
             .catch(error =>{
-                reject({
-                    error,
-                    message: 'horseman error'
-                })
+                if(secondTry) {
+                    return reject({
+                        error,
+                        message: 'horseman error'
+                    })
+                }
+                console.log(`Error getting ${url}\nWill try 1 more time`)
+                getHtml({url, secondTry: true}).then(resolve);
             })
             .close();
     })
