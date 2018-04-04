@@ -19,7 +19,7 @@ function start(){
 }
 
 function buildNextEbook({urls, config}){
-    const url = urls.pop()
+    const url = urls.shift()
     return buildEbook({url, config})
         .then(ebook => generateEpub(ebook))
         .then(epub => generateMobi({input: epub, output: epub.replace(/\.epub$/, '.mobi')}))

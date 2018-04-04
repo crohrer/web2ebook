@@ -17,6 +17,7 @@ function generateEpub({
         lang,
         content,
         output,
+        appendChapterTitles: false,
     }
 
     return new Epub(options).promise.then(() => output);

@@ -2,7 +2,11 @@ const getHtml = require('./crawler')
 const filterHtml = require('./parser')
 const getAbsoluteUrl = require('./getAbsoluteUrl')
 
-function buildEbook({url, config, ebook = {content: []}}){
+function buildEbook({
+    url,
+    config,
+    ebook = {content: []}
+}){
     const {lang, selectors} = config
     return getHtml({url})
         .then(html => filterHtml({html, selectors}))
@@ -25,7 +29,8 @@ function buildEbook({url, config, ebook = {content: []}}){
             if (nextLink) {
                 return buildEbook({
                     url: getAbsoluteUrl({urlWithDomain: url, relativeUrl: nextLink}),
-                    config, ebook
+                    config,
+                    ebook
                 });
             }
             return ebook
