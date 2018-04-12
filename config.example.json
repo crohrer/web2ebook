@@ -8,6 +8,7 @@
             "isArray": true
         }
     },
+    "appendChapterTitles": false,
     "language": "de",
     "selectors": {
         "title": {

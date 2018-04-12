@@ -7,6 +7,7 @@ function generateEpub({
     cover = undefined,
     lang = 'en',
     content = [],
+    appendChapterTitles = false,
 } = {}){
     const output = `output/${title.trim()}-${author}.epub`.replace(/\s+/g, '-').replace('\n', '')
     const options = {
@@ -17,7 +18,7 @@ function generateEpub({
         lang,
         content,
         output,
-        appendChapterTitles: false,
+        appendChapterTitles,
     }
 
     return new Epub(options).promise.then(() => output);

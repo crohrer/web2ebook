@@ -14,7 +14,8 @@ function buildEbook({
         .then(results =>{
             let {title, author, publisher, cover, content, chapter, nextLink} = results;
 
-            ebook.lang = lang
+            ebook.lang = lang;
+            ebook.appendChapterTitles = config.appendChapterTitles;
             if (title) ebook.title = title;
             if (author && author.length) ebook.author = author;
             if (publisher) ebook.publisher = publisher;
