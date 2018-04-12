@@ -5,9 +5,10 @@ const getAbsoluteUrl = require('./getAbsoluteUrl')
 function buildEbook({
     url,
     config,
-    ebook = {content: []}
+    ebook = {content: []},
+    prevUrls = [],
 }){
-    const {lang, selectors} = config
+    const {lang, selectors} = config;
     return getHtml({url})
         .then(html => filterHtml({html, selectors}))
         .then(results =>{
@@ -25,12 +26,13 @@ function buildEbook({
             return {ebook, nextLink}
         })
         .then(result =>{
-            let {ebook, nextLink} = result
-            if (nextLink) {
+            let {ebook, nextLink} = result;
+            if (nextLink && prevUrls.indexOf(nextLink) === -1) {
                 return buildEbook({
                     url: getAbsoluteUrl({urlWithDomain: url, relativeUrl: nextLink}),
                     config,
-                    ebook
+                    ebook,
+                    prevUrls: [...prevUrls, url]
                 });
             }
             return ebook
