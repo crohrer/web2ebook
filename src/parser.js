@@ -1,13 +1,24 @@
 const cheerio = require('cheerio')
+const getAbsoluteUrl = require('./getAbsoluteUrl')
 
 function filterHtml({
     html = '',
     selectors = {},
+    url,
 }){
     return new Promise((resolve, reject) =>{
         if (html === '') return reject({message: 'Empty HTML'})
 
         let $ = cheerio.load(html);
+        // rewrite image paths to absolute urls for downloading
+        $("img").each(function() {
+            let old_src = $(this).attr("src");
+            if (!old_src){
+                return;
+            }
+            let new_src = getAbsoluteUrl({urlWithDomain: url, relativeUrl: old_src});
+            $(this).attr("src", new_src);
+        });
         let results = {}
         Object.keys(selectors).map(key =>{
             let item = selectors[key];

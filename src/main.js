@@ -8,10 +8,13 @@ const fs = require('fs')
 
 function start(){
     const config = JSON.parse(fs.readFileSync('config.json', 'utf8'));
-    const {url, bookLink} = config.bookList;
+    if(!config.bookList && config.bookUrl){
+        return buildNextEbook({urls: [config.bookUrl], config})
+    }
 
+    const {url, bookLink} = config.bookList;
     getHtml({url})
-        .then(html => filterHtml({html, selectors: {bookLink}}))
+        .then(html => filterHtml({html, selectors: {bookLink}, url}))
         .then(results => buildNextEbook({
             urls: results.bookLink.map(link => getAbsoluteUrl({urlWithDomain: url, relativeUrl: link})),
             config
@@ -20,7 +23,7 @@ function start(){
 
 function buildNextEbook({urls, config}){
     const url = urls.shift()
-    return buildEbook({url, config})
+    return buildEbook({url, config, prevUrls: [url]})
         .then(ebook => generateEpub(ebook))
         .then(epub => generateMobi({input: epub, output: epub.replace(/\.epub$/, '.mobi')}))
         .catch(e => console.error(e))

@@ -10,7 +10,7 @@ function buildEbook({
 }){
     const {lang, selectors} = config;
     return getHtml({url})
-        .then(html => filterHtml({html, selectors}))
+        .then(html => filterHtml({html, selectors, url}))
         .then(results =>{
             let {title, author, publisher, cover, content, chapter, nextLink} = results;
 
@@ -28,12 +28,13 @@ function buildEbook({
         })
         .then(result =>{
             let {ebook, nextLink} = result;
-            if (nextLink && prevUrls.indexOf(nextLink) === -1) {
+            const nextUrl = nextLink && getAbsoluteUrl({urlWithDomain: url, relativeUrl: nextLink});
+            if (nextLink && prevUrls.indexOf(nextUrl) === -1) {
                 return buildEbook({
-                    url: getAbsoluteUrl({urlWithDomain: url, relativeUrl: nextLink}),
+                    url: nextUrl,
                     config,
                     ebook,
-                    prevUrls: [...prevUrls, url]
+                    prevUrls: [...prevUrls, nextUrl]
                 });
             }
             return ebook
