@@ -8,6 +8,7 @@
     "cheerio": "^1.0.0-rc.2",
     "epub-gen": "^0.0.20",
     "kindlegen": "^1.1.0",
+    "node-calibre": "^1.2.0",
     "node-horseman": "^3.3.0",
     "phantomjs-prebuilt": "^2.1.16"
   },

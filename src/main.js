@@ -8,6 +8,26 @@ const fs = require('fs')
 
 function start(){
     const config = JSON.parse(fs.readFileSync('config.json', 'utf8'));
+
+    if(config.textMode){
+        return textMode(config);
+    }
+
+    return defaultMode(config);
+}
+
+function textMode(config){
+    if(!config.bookList && config.bookUrl){
+        return console.log('book url not implemented yet');
+    }
+
+    const {body} = config.selectors;
+    getHtml({url})
+        .then(html => filterHtml({html, selectors: {body}, url}))
+        .then(results => console.log(results))
+}
+
+function defaultMode(config){
     if(!config.bookList && config.bookUrl){
         return buildNextEbook({urls: [config.bookUrl], config})
     }

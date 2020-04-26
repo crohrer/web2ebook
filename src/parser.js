@@ -19,7 +19,7 @@ function filterHtml({
             let new_src = getAbsoluteUrl({urlWithDomain: url, relativeUrl: old_src});
             $(this).attr("src", new_src);
         });
-        let results = {}
+        let results = {};
         Object.keys(selectors).map(key =>{
             let item = selectors[key];
             let $item = $(item.selector);
@@ -31,7 +31,12 @@ function filterHtml({
                 case "attr":
                     if (item.isArray) {
                         results[key] = [];
-                        $item.map((i, el) => results[key].push($(el).attr(item.attr)));
+                        $item.map((i, el) => {
+                            const attr = $(el).attr(item.attr);
+                            if(attr.trim()){
+                                results[key].push(attr)
+                            }
+                        });
                     } else {
                         results[key] = $item.attr(item.attr);
                     }
@@ -40,7 +45,12 @@ function filterHtml({
                 default:
                     if (item.isArray) {
                         results[key] = [];
-                        $item.map((i, el) => results[key].push($(el).text()));
+                        $item.map((i, el) => {
+                            const text = $(el).text();
+                            if(text.trim()){
+                                results[key].push(text)
+                            }
+                        });
                     } else {
                         results[key] = $item.first().text();
                     }
