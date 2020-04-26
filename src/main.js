@@ -45,7 +45,8 @@ function buildNextEbook({urls, config}){
     const url = urls.shift()
     return buildEbook({url, config, prevUrls: [url]})
         .then(ebook => generateEpub(ebook))
-        .then(epub => generateMobi({input: epub, output: epub.replace(/\.epub$/, '.mobi')}))
+        // disabled mobi support because of Catalina x64 issue https://github.com/hakatashi/kindlegen/issues/7
+        //.then(epub => generateMobi({input: epub, output: epub.replace(/\.epub$/, '.mobi')}))
         .catch(e => console.error(e))
         .then(() => {
             if(urls.length) buildNextEbook({urls, config})

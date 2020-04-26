@@ -39,5 +39,6 @@
             "type": "html",
             "ignoreSelector": ".ad-container"
         }
-    }
+    },
+    "ignoreNextLinks": ["http://www.zeit.de/zeit-magazin/essen-trinken/index?page2"]
 }

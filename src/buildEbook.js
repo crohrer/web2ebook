@@ -29,7 +29,8 @@ function buildEbook({
         .then(result =>{
             let {ebook, nextLink} = result;
             const nextUrl = nextLink && getAbsoluteUrl({urlWithDomain: url, relativeUrl: nextLink});
-            if (nextLink && prevUrls.indexOf(nextUrl) === -1) {
+            const ignoreNextLinks = config.ignoreNextLinks || [];
+            if (nextLink && prevUrls.indexOf(nextUrl) === -1 && ignoreNextLinks.indexOf(nextUrl) === -1) {
                 return buildEbook({
                     url: nextUrl,
                     config,
