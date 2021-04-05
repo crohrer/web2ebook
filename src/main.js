@@ -43,7 +43,7 @@ function defaultMode(config){
 
 function buildNextEbook({urls, config}){
     const url = urls.shift()
-    return buildEbook({url, config, prevUrls: [url]})
+    return buildEbook({ url, chapterUrls: config.chapterUrls, config, prevUrls: [url]})
         .then(ebook => generateEpub(ebook))
         // disabled mobi support because of Catalina x64 issue https://github.com/hakatashi/kindlegen/issues/7
         //.then(epub => generateMobi({input: epub, output: epub.replace(/\.epub$/, '.mobi')}))

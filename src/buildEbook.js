@@ -4,10 +4,14 @@ const getAbsoluteUrl = require('./getAbsoluteUrl')
 
 function buildEbook({
     url,
+    chapterUrls = [],
     config,
     ebook = {content: []},
     prevUrls = [],
 }){
+    if (chapterUrls.length){
+        url = chapterUrls.shift();
+    }
     const {lang, selectors, overrides} = config;
     return getHtml({url})
         .then(html => filterHtml({html, selectors, overrides, url}))
@@ -30,6 +34,14 @@ function buildEbook({
             let {ebook, nextLink} = result;
             const nextUrl = nextLink && getAbsoluteUrl({urlWithDomain: url, relativeUrl: nextLink});
             const ignoreNextLinks = config.ignoreNextLinks || [];
+            if (chapterUrls.length) {
+                return buildEbook({
+                    chapterUrls,
+                    config,
+                    ebook,
+                    prevUrls: [...prevUrls, nextUrl]
+                });
+            }
             if (nextLink && prevUrls.indexOf(nextUrl) === -1 && ignoreNextLinks.indexOf(nextUrl) === -1) {
                 return buildEbook({
                     url: nextUrl,
