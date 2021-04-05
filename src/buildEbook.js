@@ -8,9 +8,9 @@ function buildEbook({
     ebook = {content: []},
     prevUrls = [],
 }){
-    const {lang, selectors} = config;
+    const {lang, selectors, overrides} = config;
     return getHtml({url})
-        .then(html => filterHtml({html, selectors, url}))
+        .then(html => filterHtml({html, selectors, overrides, url}))
         .then(results =>{
             let {title, author, publisher, cover, content, chapter, nextLink} = results;
 

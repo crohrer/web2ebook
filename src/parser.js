@@ -4,6 +4,7 @@ const getAbsoluteUrl = require('./getAbsoluteUrl')
 function filterHtml({
     html = '',
     selectors = {},
+    overrides = {},
     url,
 }){
     return new Promise((resolve, reject) =>{
@@ -21,6 +22,8 @@ function filterHtml({
         });
         let results = {};
         Object.keys(selectors).map(key =>{
+            if (overrides[key]) return results[key] = overrides[key];
+
             let item = selectors[key];
             let $item = $(item.selector);
             switch (item.type) {

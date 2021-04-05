@@ -40,5 +40,10 @@
             "ignoreSelector": ".ad-container"
         }
     },
+    "overrides": {
+        "title": "",
+        "chapter": "",
+        "author": ""
+    },
     "ignoreNextLinks": ["http://www.zeit.de/zeit-magazin/essen-trinken/index?page2"]
 }
