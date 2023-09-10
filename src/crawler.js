@@ -1,30 +1,33 @@
 const Promise = require('bluebird')
-const Horseman = require('node-horseman')
+const puppeteer = require('puppeteer')
 
 function getHtml({url, tryCount = 0}){
-    const horseman = new Horseman({ignoreSSLErrors: true})
-
-    return new Promise((resolve, reject) =>{
-        if (!url) return reject({message: 'empty URL'})
+    return new Promise((resolve, reject) => {
+        if (!url) return reject({ message: 'empty URL' });
         console.log(`Retrieving html for ${url}`);
 
-        horseman
-            .open(url)
-            .html()
-            .then(resolve)
-            .catch(error =>{
-                if(tryCount > 2) {
+        (async () => {
+            const browser = await puppeteer.launch({ ignoreHTTPSErrors: true, headless: 'new' });
+            const page = await browser.newPage();
+            try {
+                await page.goto(url);
+                const html = await page.content();
+                resolve(html);
+            } catch (error) {
+                if (tryCount > 2) {
                     reject({
                         error,
-                        message: 'horseman error'
+                        message: 'puppeteer error'
                     });
                     return;
                 }
                 console.log(`Error getting ${url}\nWill try 2 more times`);
-                getHtml({url, tryCount: tryCount + 1}).then(resolve).catch(reject);
-            })
-            .close()
-    })
+                getHtml({ url, tryCount: tryCount + 1 }).then(resolve).catch(reject);
+            } finally {
+                await browser.close();
+            }
+        })();
+    });
 }
 
-module.exports = getHtml
+module.exports = getHtml;

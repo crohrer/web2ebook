@@ -10,9 +10,9 @@
     "kindlegen": "^1.1.0",
     "node-calibre": "^1.2.0",
     "node-horseman": "^3.3.0",
-    "phantomjs-prebuilt": "^2.1.16"
+    "phantomjs-prebuilt": "^2.1.16",
+    "puppeteer": "^21.1.1"
   },
-  "devDependencies": {},
   "scripts": {
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
